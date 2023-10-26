@@ -8,7 +8,7 @@ from gamedata import Game
 class Server:
     def __init__(self):
         self.hostname = socket.gethostname()
-        self.server = "192.168.1.17"
+        self.server = "192.168.1.15"
 
         self.port = 5558
 
@@ -46,7 +46,7 @@ class Server:
                     else:
                         if data != "get":
                            match player:
-                               case 0:
+                               case 0:    
                                    game.updatePlayerOnePos(data)
                                case 1:
                                    game.updatePlayerTwoPos(data)

@@ -1,7 +1,7 @@
 import pygame as pg
 from player import Player
 from network import Network
-
+import ast
 
 #region Camera
 class CameraGroup(pg.sprite.Group):
@@ -75,16 +75,16 @@ class Level:
         match self.playerID:
             case 0:
                 
-                print(self.game.getPlayerOnePos())
-                s
-                
-                #self.player2.rect.center = self.game.getPlayerTwoPos()
+                if type(self.game.getPlayerTwoPos()) == str:
+                    tup = ast.literal_eval(str(self.game.getPlayerTwoPos())) 
+                    self.player2.rect.center = tup
                 
             case 1:
-                print(type(self.game.getPlayerOnePos()))
-                
-                
-                #self.player2.rect.center = self.game.getPlayerOnePos()
+
+                if type(self.game.getPlayerOnePos()) == str:
+                    tup = ast.literal_eval(str(self.game.getPlayerOnePos()))
+                    
+                    self.player2.rect.center = tup
               
                 
      

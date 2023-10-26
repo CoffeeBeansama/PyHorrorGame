@@ -5,18 +5,18 @@ class Game:
         self.id = id
 
         self.playerPos = [(100,100),(150,100)]
+
         
 
     
     def updatePlayerOnePos(self,pos):
-        newPos = pos.replace(',',"")
-        self.playerPos[0] = newPos
+        
+        self.playerPos[0] = pos
 
      
     
     def updatePlayerTwoPos(self,pos):
-        newPos = pos.replace(',',"")
-        self.playerPos[1] = newPos
+        self.playerPos[1] = pos
  
 
     def getPlayerOnePos(self):
