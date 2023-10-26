@@ -2,16 +2,13 @@ import socket
 from _thread import *
 import pickle
 from gamedata import Game
-
-
+from settings import ip_address
 
 class Server:
     def __init__(self):
-        self.hostname = socket.gethostname()
-        self.server = "192.168.1.15"
+        self.server = ip_address
 
-        self.port = 5558
-
+        self.port = 5559
         self._socket = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 
         self.gameIdCount = 0
@@ -47,9 +44,9 @@ class Server:
                         if data != "get":
                            match player:
                                case 0:    
-                                   game.updatePlayerOnePos(data)
+                                   game.updatePlayerOneData(data)
                                case 1:
-                                   game.updatePlayerTwoPos(data)
+                                   game.updatePlayerTwoData(data)
                                 
 
 
@@ -98,5 +95,3 @@ class Server:
 
 server = Server()
 server.run()
-
-

@@ -67,27 +67,21 @@ class Level:
 
     def update(self):
         self.game = self.network.send("get")
+        
         self.visibleSprites.custom_draw(self.player)
         self.player.update()
+        self.network.send(str(self.player.data))
 
-        self.network.send(f"{(self.player.rect.center)}")
-      
-        match self.playerID:
-            case 0:
-                
-                if type(self.game.getPlayerTwoPos()) == str:
-                    tup = ast.literal_eval(str(self.game.getPlayerTwoPos())) 
-                    self.player2.rect.center = tup
-                
-            case 1:
-
-                if type(self.game.getPlayerOnePos()) == str:
-                    tup = ast.literal_eval(str(self.game.getPlayerOnePos()))
-                    
-                    self.player2.rect.center = tup
-              
-                
-     
+        try:
+            match self.playerID:
+                case 0:
+                        data = ast.literal_eval(str(self.game.getPlayerTwoData()))
+                        self.player2.handlePlayer2Movement(data["Pos"],data["Direction"])
+                case 1:
+                        data = ast.literal_eval(str(self.game.getPlayerOneData()))
+                        self.player2.handlePlayer2Movement(data["Pos"],data["Direction"])
+        except:
+             return               
 
         
         

@@ -1,12 +1,12 @@
 import socket
 import pickle
+from settings import ip_address
 
 class Network:
     def __init__(self):
         self.client = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-        self.hostname = socket.gethostname()
-        self.server = "192.168.1.15"
-        self.port = 5558
+        self.server = ip_address
+        self.port = 5559
         self.addr = (self.server,self.port)
         self.player = self.connect()
 
@@ -26,4 +26,3 @@ class Network:
             return pickle.loads(self.client.recv(4068))
         except socket.error as e:
             pass
-

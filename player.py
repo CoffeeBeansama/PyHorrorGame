@@ -28,6 +28,12 @@ class Player(pg.sprite.Sprite):
         self.frame_index = 0
 
         self.speed = 1
+
+        self.data = {
+            "Pos" : str(self.rect.center),
+            "Direction" : str(self.direction)
+
+        }
         
 
     
@@ -42,9 +48,9 @@ class Player(pg.sprite.Sprite):
             self.animationStates[animations] = import_folder(fullPath)
 
 
-    def handleMovement(self,speed):
-        self.hitbox.x += self.direction.x * speed
-        self.hitbox.y += self.direction.y * speed
+    def handleMovement(self,direction,speed):
+        self.hitbox.x += direction[0] * speed
+        self.hitbox.y += direction[1] * speed
 
         self.rect.center = self.hitbox.center
     
@@ -77,6 +83,28 @@ class Player(pg.sprite.Sprite):
         self.image = animation[int(self.frame_index)].convert_alpha()
         self.rect = self.image.get_rect(center=self.hitbox.center)
 
+    def handlePlayer2Movement(self,pos,direction):
+
+        
+        
+        idle = direction == (0.0,0.0)
+
+        if not idle:
+            if direction[0] > 0:
+                self.state = "Right"
+            elif direction[0] < 0:
+                self.state = "Left"
+            elif direction[1] > 0:
+                self.state = "Down"
+            elif direction[1] < 1:
+                self.state = "Up"
+        else:
+            if not "idle" in self.state:
+                self.state = f"{self.state}_idle"
+
+    
+        self.handleAnimation()
+        self.rect.center = pos
 
     def getInputs(self):
         keys = pg.key.get_pressed()
@@ -94,6 +122,9 @@ class Player(pg.sprite.Sprite):
 
         
     def update(self):
+        self.data["Pos"] = self.rect.center
+        self.data["Direction"] = (self.direction.x,self.direction.y)
+        
         self.getInputs()
-        self.handleMovement(self.speed)
+        self.handleMovement(self.direction,self.speed)
         self.handleAnimation()
