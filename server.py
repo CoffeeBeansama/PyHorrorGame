@@ -42,13 +42,14 @@ class Server:
                         break
                     else:
                         if data != "get":
+                           print(data)
                            match player:
                                case 0:    
                                    game.updatePlayerOneData(data)
                                case 1:
                                    game.updatePlayerTwoData(data)
                                 
-
+                        
 
                                 
                                   

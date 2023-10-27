@@ -24,6 +24,8 @@ class CameraGroup(pg.sprite.Group):
 
         self.offset = pg.math.Vector2()
 
+        
+
     def custom_draw(self, player):
         # getting the offset  for camera
         self.offset.x = player.rect.centerx - self.half_width
@@ -64,25 +66,34 @@ class Level:
         self.player = Player(p1Pos if self.playerID == 0  else p2Pos,self.visibleSprites)
         self.player2 = Player(p2Pos if self.playerID == 0 else p1Pos,self.visibleSprites)
 
+        self.gameData = {
+             "Player" : self.player.data
+        }
 
     def update(self):
         self.game = self.network.send("get")
-        
-        self.visibleSprites.custom_draw(self.player)
+    
         self.player.update()
-        self.network.send(str(self.player.data))
+        self.gameData["Player"] = self.player.data
 
+        self.network.send(str(self.gameData))
+
+        self.visibleSprites.custom_draw(self.player)
+        
         try:
             match self.playerID:
                 case 0:
+                        
                         data = ast.literal_eval(str(self.game.getPlayerTwoData()))
-                        self.player2.handlePlayer2Movement(data["Pos"],data["Direction"])
+                        self.player2.handlePlayer2Movement(data["Player"]["Pos"],data["Player"]["Direction"])
                 case 1:
+                        
                         data = ast.literal_eval(str(self.game.getPlayerOneData()))
-                        self.player2.handlePlayer2Movement(data["Pos"],data["Direction"])
+                        self.player2.handlePlayer2Movement(data["Player"]["Pos"],data["Player"]["Direction"])
         except:
-             return               
-
+             return     
+                  
+        
         
         
         

@@ -4,17 +4,20 @@ class Game:
     def __init__(self,id):
         self.id = id
 
-        self.playerData = [None,None]
+        self.data = {
+            "PlayerOne" : None,
+            "PlayerTwo" : None
+        }
 
             
-    def updatePlayerOneData(self,dir):
-        self.playerData[0] = dir
+    def updatePlayerOneData(self,data):
+        self.data["PlayerOne"] = data
         
-    def updatePlayerTwoData(self,dir):
-        self.playerData[1] = dir 
+    def updatePlayerTwoData(self,data):
+        self.data["PlayerTwo"] = data
 
     def getPlayerOneData(self):
-        return self.playerData[0]
+        return self.data["PlayerOne"]
     
     def getPlayerTwoData(self):
-        return self.playerData[1]
+        return self.data["PlayerTwo"]
